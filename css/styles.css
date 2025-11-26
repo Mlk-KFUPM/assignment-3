@@ -191,6 +191,25 @@ main {
   color: var(--muted);
   font-style: italic;
 }
+.state-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.inline-field input {
+  width: auto;
+  min-width: 160px;
+}
+.hidden {
+  display: none !important;
+}
 .private {
   opacity: 0.9;
 }

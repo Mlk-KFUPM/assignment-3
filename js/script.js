@@ -11,13 +11,17 @@
   }
 
   // --- A1: Set Time-based Greeting ---
-  function setGreeting() {
+  function setGreeting(nameFromStorage) {
     const h = new Date().getHours();
     const greetingEl = document.getElementById("greeting");
+    const savedName =
+      nameFromStorage || localStorage.getItem("visitorName") || "";
     if (greetingEl) {
-      const msg =
-        h < 12 ? "Good morning." : h < 18 ? "Good afternoon." : "Good evening.";
-      greetingEl.textContent = msg;
+      const base =
+        h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+      greetingEl.textContent = savedName
+        ? `${base}, ${savedName}.`
+        : `${base}.`;
     }
   }
 
@@ -158,6 +162,88 @@
           firstInvalid.focus();
         }
       }
+    });
+  }
+
+  // --- State: Remember visitor name ---
+  function initNameMemory() {
+    const nameInput = document.getElementById("nameInput");
+    const saveBtn = document.getElementById("saveName");
+    const status = document.getElementById("nameStatus");
+    if (!nameInput || !saveBtn) return;
+
+    const saved = localStorage.getItem("visitorName") || "";
+    if (saved) {
+      nameInput.value = saved;
+      setGreeting(saved);
+      if (status) {
+        status.textContent = `Welcome back, ${saved}!`;
+      }
+    }
+
+    const saveName = () => {
+      const trimmed = nameInput.value.trim();
+      if (trimmed.length < 2) {
+        if (status) status.textContent = "Please enter at least 2 characters.";
+        return;
+      }
+      localStorage.setItem("visitorName", trimmed);
+      setGreeting(trimmed);
+      if (status) status.textContent = `Saved. Hello, ${trimmed}!`;
+    };
+
+    saveBtn.addEventListener("click", saveName);
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        saveName();
+      }
+    });
+  }
+
+  // --- State: Simulated login toggle ---
+  function initLoginState() {
+    const loginBtn = document.getElementById("loginToggle");
+    const loginStatus = document.getElementById("loginStatus");
+    if (!loginBtn || !loginStatus) return;
+
+    const stored = localStorage.getItem("isLoggedIn") === "true";
+
+    const render = (isLoggedIn) => {
+      loginBtn.textContent = isLoggedIn ? "Log Out" : "Log In";
+      loginStatus.textContent = isLoggedIn
+        ? "Logged in (simulated)."
+        : "Logged out.";
+      localStorage.setItem("isLoggedIn", String(isLoggedIn));
+    };
+
+    render(stored);
+
+    loginBtn.addEventListener("click", () => {
+      const next = !(localStorage.getItem("isLoggedIn") === "true");
+      render(next);
+    });
+  }
+
+  // --- State: Show/Hide projects section ---
+  function initProjectVisibilityToggle() {
+    const toggleBtn = document.getElementById("projectToggle");
+    const projectsSection = document.getElementById("projects");
+    if (!toggleBtn || !projectsSection) return;
+
+    const storedHidden = localStorage.getItem("projectsHidden") === "true";
+
+    const render = (hidden) => {
+      projectsSection.classList.toggle("hidden", hidden);
+      toggleBtn.textContent = hidden ? "Show Projects" : "Hide Projects";
+      localStorage.setItem("projectsHidden", String(hidden));
+    };
+
+    render(storedHidden);
+
+    toggleBtn.addEventListener("click", () => {
+      const nextHidden = !projectsSection.classList.contains("hidden");
+      render(nextHidden);
     });
   }
 
@@ -441,6 +527,9 @@
     initProjectFilters(); // <-- Add event listeners to filter buttons
     initProjectSort(); // <-- Enable sorting
     initExperienceGuide(); // <-- Conditional guidance by level
+    initNameMemory(); // <-- Persist visitor name
+    initLoginState(); // <-- Simulated login state
+    initProjectVisibilityToggle(); // <-- Persist project section visibility
     initQuotes(); // <-- Fetch and show inspirational quote from API
   });
 })(); // End of IIFE
