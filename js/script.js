@@ -279,6 +279,89 @@
     });
   }
 
+  // --- A1: Inspirational Quotes (Fixed) ---
+  function initQuotes() {
+    const quoteText = document.getElementById("quoteText");
+    const quoteAuthor = document.getElementById("quoteAuthor");
+    const quoteError = document.getElementById("quoteError");
+    const refreshBtn = document.getElementById("quoteRefresh");
+    // Safety check
+    if (!quoteText || !quoteAuthor) return;
+
+    const setLoadingState = () => {
+      quoteText.style.opacity = "0.5";
+      quoteText.textContent = "Loading wisdom...";
+      quoteAuthor.textContent = "";
+      if (quoteError) quoteError.style.display = "none";
+    };
+
+    const setButtonState = (isLoading) => {
+      if (!refreshBtn) return;
+      refreshBtn.disabled = isLoading;
+      refreshBtn.textContent = isLoading ? "Loading..." : "New Quote";
+    };
+
+    const showQuote = (content, author) => {
+      quoteText.style.opacity = "1";
+      quoteText.textContent = `"${content}"`;
+      quoteAuthor.textContent = `- ${author}`;
+    };
+
+    // 1. The reliable API source
+    const apiUrl = "https://dummyjson.com/quotes/random";
+
+    // 2. The local fallback to guarantee the section never breaks
+    const localQuotes = [
+      {
+        text: "Code is like humor. When you have to explain it, it’s bad.",
+        author: "Cory House",
+      },
+      {
+        text: "Fix the cause, not the symptom.",
+        author: "Steve Maguire",
+      },
+      {
+        text: "Simplicity is the soul of efficiency.",
+        author: "Austin Freeman",
+      },
+      {
+        text: "Make it work, make it right, make it fast.",
+        author: "Kent Beck",
+      },
+    ];
+
+    async function fetchQuote() {
+      setLoadingState();
+      setButtonState(true);
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("API failed");
+
+        const data = await response.json();
+        showQuote(data.quote, data.author);
+      } catch (err) {
+        console.warn("API failed, switching to local fallback:", err);
+        const randomLocal =
+          localQuotes[Math.floor(Math.random() * localQuotes.length)];
+        showQuote(randomLocal.text, randomLocal.author);
+
+        if (quoteError) {
+          quoteError.textContent = "Offline mode: Showing local quotes.";
+          quoteError.style.display = "block";
+        }
+      } finally {
+        setButtonState(false);
+      }
+    }
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", fetchQuote);
+    }
+
+    fetchQuote();
+  }
+
   // --- Run all initializers on DOMContentLoaded ---
   document.addEventListener("DOMContentLoaded", () => {
     setYear();
@@ -289,5 +372,6 @@
     initContactForm();
     loadProjectsFromData(); // <-- Load all projects initially
     initProjectFilters(); // <-- Add event listeners to filter buttons
+    initQuotes(); // <-- Fetch and show inspirational quote from API
   });
 })(); // End of IIFE

@@ -165,6 +165,27 @@ main {
   object-fit: cover;
   border-radius: 8px;
 }
+.quote-card {
+  display: grid;
+  gap: 10px;
+}
+.quote-text {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.quote-author {
+  margin: 0;
+}
+.quote-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+#quoteRefresh:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 .lock {
   margin-top: 8px;
   color: var(--muted);
