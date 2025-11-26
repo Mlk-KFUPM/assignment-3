@@ -342,7 +342,7 @@
 
         return `
         <article class="card project-card">
-          <img src="${project.imageUrl}" alt="${project.title} preview" />
+          <img src="${project.imageUrl}" alt="${project.title} preview" loading="lazy" />
           <h3>${project.title}</h3>
           <p class="description">${project.description}</p>
           <p class="muted small">${project.year}</p>
