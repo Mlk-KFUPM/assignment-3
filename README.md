@@ -1,38 +1,30 @@
-# Assignment 2 – Interactive Features
+# Assignment 3 – Portfolio Enhancements
 
-This project is an enhancement of the Assignment 1 portfolio. It introduces interactivity, dynamic data, and modern web development techniques to create a more engaging user experience.
+Portfolio site built with semantic HTML, modern CSS (variables, grid, flexbox), and JavaScript for dynamic UI. This iteration adds sorting, state persistence, and an inspirational quotes fetch with graceful fallbacks.
 
-This portfolio is built with semantic HTML, modern CSS (with variables, grid, and flexbox), and dynamic JavaScript.
-
-## 🚀 New Features (Assignment 2)
-
-- **Dynamic Project Section**: The "Projects" section is no longer static HTML. The project data is stored in a JavaScript array (`projectsData`) in `js/script.js`. On page load, JavaScript reads this array and dynamically generates the project cards.
-- **Interactive Project Filtering**: Users can click filter buttons ("All", "Flutter", "Spring Boot", etc.) to dynamically filter the project list, which satisfies the "Dynamic Content" requirement.
-- **Enhanced Form Validation**: The contact form now uses JavaScript to provide real-time, inline error messages instead of relying on default browser popups.
-- **Animations & Transitions**: Project cards now have a "lift" (transform) animation on hover and fade in smoothly when loaded or filtered.
-- **Data Handling**: The site uses `localStorage` to save the user's theme preference and handles form submission.
-- **Error & Empty States**: The project filter will show a "No projects found" message if no projects match the selected filter.
+## 🚀 Features
+- Dynamic projects with filter + sort (by year/title) and year badges.
+- Contact form with inline validation (length + email checks).
+- Theme toggle persisted in `localStorage`.
+- State management: remembered visitor name, simulated login toggle, show/hide projects toggle (all persisted).
+- Conditional guidance card (Beginner/Intermediate/Advanced).
+- Inspirational quote pulled from DummyJSON API with fallback notice.
+- Performance tweaks: lazy-loaded images.
 
 ## 🖥️ Run Locally
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Mlk-KFUPM/assignment-3.git
+   cd assignment-3
+   ```
+2. Open `index.html` in any modern browser.
 
-1.  Clone the repository:
-    ```bash
-    git clone [https://github.com/Mlk-KFUPM/assignment-2.git](https://github.com/Mlk-KFUPM/assignment-2.git)
-    cd assignment-2
-    ```
-2.  Open `index.html` in any modern web browser.
+## 🤖 AI Usage (summary)
+- Tool: ChatGPT (Codex CLI) for pairing on sorting/state features, quotes API, and docs.
+- See full log in `docs/ai-usage-report.md` (prompts, outputs, edits, lessons).
 
-## 🤖 AI Usage
-
-This project was built with assistance from AI tools (Gemini, ChatGPT, and Cursor AI). This was used for:
-
-- Pivoting from a failed API fetch to a more robust local data array.
-- Implementing the project filtering logic.
-- Refactoring the contact form for inline validation.
-- Debugging a CSS light-mode theme bug.
-
-Full details on this process are documented in [docs/ai-usage-report.md](docs/ai-usage-report.md).
+## 🌐 Live Demo (optional)
+- If deployed, add link here (e.g., GitHub Pages/Netlify/Vercel).
 
 ## 📜 License
-
 MIT
