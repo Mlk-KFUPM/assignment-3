@@ -62,3 +62,45 @@ This document details the use of AI in completing Assignment 2.
 - I gained a strong understanding of how to separate data (the `projectsData` array) from presentation (HTML) and use JavaScript (`.map()`, `.filter()`) to build a dynamic UI.
 - I learned how to implement interactive features by handling user events (clicks) to update the DOM.
 - I reinforced the importance of using CSS variables for all styling to ensure themes work correctly.
+
+---
+
+# Assignment 3 - AI Usage Report (this submission)
+
+## Tools Used
+- **ChatGPT (Codex CLI)**: Pair programming, code generation, and documentation help for new requirements.
+
+## Use Cases
+
+1) **Quotes API integration and resilience**
+- Prompt: “Fetch and display inspirational quotes; add graceful error handling.”
+- Output: Generated `initQuotes` using DummyJSON API, loading states, fallback notice.
+- Edits: Simplified messaging and ensured CORS-friendly endpoint.
+
+2) **Complex logic expansion**
+- Prompt: “Add sorting to projects and conditional guidance by level.”
+- Output: Sorting options (Newest/Oldest/Title A–Z/Z–A) and Beginner/Intermediate/Advanced copy swap.
+- Edits: Added project years, preserved existing filters, and wired UI labels.
+
+3) **State management features**
+- Prompt: “Persist visitor name, login toggle, and show/hide projects.”
+- Output: LocalStorage-backed name greeting, simulated login toggle, project visibility toggle, and UI controls.
+- Edits: Integrated with existing greeting function and added `hidden` utility class.
+
+4) **Performance tweaks**
+- Prompt: “Optimize images and loading.”
+- Output: Added `loading=\"lazy\"` and explicit dimensions on images.
+- Edits: Kept markup minimal; no other assets changed.
+
+## Benefits
+- Faster delivery of multi-feature updates (sorting, state persistence, API handling) with consistent patterns.
+- Reduced trial-and-error on CORS/API selection by leveraging AI suggestions.
+
+## Challenges
+- Sandbox network limits blocked live API fetches; had to choose a CORS-friendly endpoint and keep fallbacks.
+- Keeping new features consistent with prior code (filters, theme toggle) required manual integration.
+
+## Learning Outcomes
+- Reinforced managing UI state with `localStorage` and idempotent render functions.
+- Practiced combining filtering, sorting, and conditional copy updates without breaking existing logic.
+- Improved approach to graceful degradation when APIs are blocked (clear messaging, fallbacks).
