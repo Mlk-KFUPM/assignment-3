@@ -296,6 +296,31 @@ textarea:invalid:focus {
   color: #001023;
   border-color: var(--accent);
 }
+.project-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sort-control select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--muted);
+  background: var(--panel);
+  color: var(--text);
+}
+.sort-control select:focus {
+  outline: none;
+  border-color: var(--brand);
+}
 
 /* Certifications */
 .certs {
@@ -353,6 +378,10 @@ textarea:invalid:focus {
   }
   .cards {
     grid-template-columns: 1fr;
+  }
+  .project-bar {
+    flex-direction: column;
+    align-items: flex-start;
   }
   .certs {
     grid-template-columns: 1fr 1fr;

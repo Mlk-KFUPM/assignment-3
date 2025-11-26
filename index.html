@@ -66,21 +66,57 @@
       <section id="projects" class="section">
         <h2>Projects</h2>
 
-        <div id="project-filters" class="filter-chips">
-          <button class="chip active" data-filter="All" type="button">
-            All
-          </button>
-          <button class="chip" data-filter="Flutter" type="button">
-            Flutter
-          </button>
-          <button class="chip" data-filter="Spring Boot" type="button">
-            Spring Boot
-          </button>
-          <button class="chip" data-filter="Java" type="button">Java</button>
-          <button class="chip" data-filter="React" type="button">React</button>
+        <div class="project-bar">
+          <div id="project-filters" class="filter-chips">
+            <button class="chip active" data-filter="All" type="button">
+              All
+            </button>
+            <button class="chip" data-filter="Flutter" type="button">
+              Flutter
+            </button>
+            <button class="chip" data-filter="Spring Boot" type="button">
+              Spring Boot
+            </button>
+            <button class="chip" data-filter="Java" type="button">Java</button>
+            <button class="chip" data-filter="React" type="button">React</button>
+          </div>
+          <label class="sort-control">
+            Sort
+            <select id="projectSort">
+              <option value="Newest" selected>Newest</option>
+              <option value="Oldest">Oldest</option>
+              <option value="TitleAZ">Title A–Z</option>
+              <option value="TitleZA">Title Z–A</option>
+            </select>
+          </label>
         </div>
 
         <div id="project-cards" class="cards"></div>
+      </section>
+
+      <section id="experience" class="section">
+        <h2>Pick Your Path</h2>
+        <p class="muted small">
+          Choose a level to see the guidance that best fits you.
+        </p>
+        <div class="filter-chips">
+          <button class="chip active" data-level="Beginner" type="button">
+            Beginner
+          </button>
+          <button class="chip" data-level="Intermediate" type="button">
+            Intermediate
+          </button>
+          <button class="chip" data-level="Advanced" type="button">
+            Advanced
+          </button>
+        </div>
+        <article class="card" id="levelCard">
+          <h3 id="levelTitle">Beginner focus</h3>
+          <p id="levelBody" class="muted">
+            Start with React basics and Java fundamentals. Build small UI
+            components, practice Git flows, and deploy a simple static site.
+          </p>
+        </article>
       </section>
 
       <section id="quotes" class="section">

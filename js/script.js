@@ -170,6 +170,7 @@
       description:
         "Recipe and meal-planning app targeting KSA. Flutter front end, Spring Boot API, and planned AI meal suggestions.",
       tags: ["Flutter", "Spring Boot", "Startup"],
+      year: 2025,
       isPrivate: true,
       link: null,
     },
@@ -179,6 +180,7 @@
       description:
         "Java/Spring service with risk controls and basic strategies. Modular design for data ingestion and order routing.",
       tags: ["Java", "Spring", "Finance"],
+      year: 2024,
       isPrivate: true,
       link: null,
     },
@@ -188,6 +190,7 @@
       description:
         "A course project focused on requirements engineering and system design. Built with Spring Boot, MySQL, and React.",
       tags: ["Spring Boot", "React", "SWE-206"],
+      year: 2023,
       isPrivate: false,
       link: "https://github.com/Mlk-KFUPM/ReservationSystem",
     },
@@ -197,13 +200,34 @@
       description:
         "A database-focused project for managing tournaments. Implemented with PostgreSQL, a Spring Boot backend, and a Flutter front end.",
       tags: ["Flutter", "Spring Boot", "ICS-321"],
+      year: 2022,
       isPrivate: false,
       link: "https://github.com/Mlk-KFUPM/tournament",
     },
   ];
+  let currentFilter = "All";
+  let currentSort = "Newest";
 
   // *** UPDATED: Function now accepts a filter ***
-  function loadProjectsFromData(filter = "All") {
+  function sortProjects(projects, sort) {
+    const sorted = [...projects];
+    switch (sort) {
+      case "Newest":
+        return sorted.sort((a, b) => b.year - a.year);
+      case "Oldest":
+        return sorted.sort((a, b) => a.year - b.year);
+      case "TitleAZ":
+        return sorted.sort((a, b) => a.title.localeCompare(b.title));
+      case "TitleZA":
+        return sorted.sort((a, b) => b.title.localeCompare(a.title));
+      default:
+        return sorted;
+    }
+  }
+
+  function loadProjectsFromData(filter = currentFilter, sort = currentSort) {
+    currentFilter = filter;
+    currentSort = sort;
     const container = document.getElementById("project-cards");
     if (!container) return;
 
@@ -213,8 +237,10 @@
       return project.tags.includes(filter);
     });
 
+    const sortedProjects = sortProjects(filteredProjects, sort);
+
     // 2. Generate the HTML
-    const html = filteredProjects
+    const html = sortedProjects
       .map((project) => {
         const linkHtml = project.isPrivate
           ? `<p class="lock">🔒 Private access</p>`
@@ -233,6 +259,7 @@
           <img src="${project.imageUrl}" alt="${project.title} preview" />
           <h3>${project.title}</h3>
           <p class="description">${project.description}</p>
+          <p class="muted small">${project.year}</p>
           ${linkHtml}
         </article>
       `;
@@ -275,7 +302,47 @@
       const filterValue = e.target.dataset.filter;
 
       // Reload the projects with the new filter
-      loadProjectsFromData(filterValue);
+      loadProjectsFromData(filterValue, currentSort);
+    });
+  }
+
+  function initProjectSort() {
+    const sortSelect = document.getElementById("projectSort");
+    if (!sortSelect) return;
+
+    sortSelect.addEventListener("change", () => {
+      loadProjectsFromData(currentFilter, sortSelect.value);
+    });
+  }
+
+  function initExperienceGuide() {
+    const levelButtons = document.querySelectorAll(
+      "#experience .chip[data-level]"
+    );
+    const levelTitle = document.getElementById("levelTitle");
+    const levelBody = document.getElementById("levelBody");
+    if (!levelButtons.length || !levelTitle || !levelBody) return;
+
+    const levelCopy = {
+      Beginner:
+        "Start with React basics and Java fundamentals. Build small UI components, practice Git flows, and deploy a simple static site.",
+      Intermediate:
+        "Focus on Spring Boot APIs and Flutter UI patterns. Add tests, pagination, and authentication to existing projects.",
+      Advanced:
+        "Optimize performance, add CI checks, and design scalable services. Experiment with trading bot strategies and observability.",
+    };
+
+    levelButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const selected = btn.dataset.level;
+        if (!selected) return;
+
+        levelButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        levelTitle.textContent = `${selected} focus`;
+        levelBody.textContent = levelCopy[selected] || "";
+      });
     });
   }
 
@@ -372,6 +439,8 @@
     initContactForm();
     loadProjectsFromData(); // <-- Load all projects initially
     initProjectFilters(); // <-- Add event listeners to filter buttons
+    initProjectSort(); // <-- Enable sorting
+    initExperienceGuide(); // <-- Conditional guidance by level
     initQuotes(); // <-- Fetch and show inspirational quote from API
   });
 })(); // End of IIFE
